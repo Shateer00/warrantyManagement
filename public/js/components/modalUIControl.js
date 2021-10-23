@@ -1,4 +1,3 @@
-
-function ModalCreateShow(){
+function ModalCreateShow() {
     $('#createModal').modal('show');
 }
