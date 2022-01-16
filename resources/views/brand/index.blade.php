@@ -73,7 +73,8 @@ Merek
         @endforeach
     </tbody>
 </table>
-{{ $brand->links() }}
+{!! $brand->appends(\Request::except('page'))->render() !!}
+{{-- {{ $brand->links() }} --}}
 @endif
 
 </div>
