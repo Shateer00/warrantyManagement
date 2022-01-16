@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Edit Garansi
+    View Garansi
 @endsection
 @section('content')
     <div class="container">
@@ -10,9 +10,17 @@
                     @csrf
 
                     <input type="hidden" name="action" value="create">
+
+                    <div class="mb-3">
+                        <label for="period-id" class="col-form-label" style="font-weight: 600">Batas Akhir Garansi :</label>
+                        <input type="date" class="form-control" disabled style="font-weight: 600"
+                            value="{{  \Carbon\Carbon::parse($Warranty->tblitemwarrant_purchaseDate)->addMonths($Warranty->tblitemwarrant_monthPeriod)->format('Y-m-d') }}"
+                            >
+                    </div>
+                    <hr>
                     <div class="mb-3">
                         <label for="category-code" class="col-form-label">Kode Kategori :</label>
-                        <select class="form-control" name="categorycodeedit" id="category-code">
+                        <select class="form-control" name="categorycodeedit" id="category-code" disabled>
                             {{-- <option value="">PILIH KODE KATEGORI</option> --}}
                             @foreach ($codeCategory as $key => $row)
                                 <option value="{{ $row->tblitemcategory_id }}"
@@ -24,7 +32,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="brand-code" class="col-form-label">Kode Merek :</label>
-                        <select class="form-control" name="brandcodeedit" id="brand-code">
+                        <select class="form-control" name="brandcodeedit" id="brand-code" disabled>
                             {{-- <option value="">PILIH KODE MEREK</option> --}}
                             @foreach ($codeBrand as $key => $row)
                                 <option value="{{ $row->tblitembrand_id }}"
@@ -36,52 +44,52 @@
                     </div>
                     <div class="mb-3">
                         <label for="model-code" class="col-form-label">Kode Model :</label>
-                        <select class="form-control" style="width: 100%" name="modelcodeedit" id="model-code">
+                        <select class="form-control" style="width: 100%" name="modelcodeedit" id="model-code" disabled>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="sn-transaction" class="col-form-label">SN :</label>
-                        <input type="text" class="form-control" name="sntransaction" id="sn-transaction"
+                        <input type="text" class="form-control" name="sntransaction" id="sn-transaction" disabled
                             value="{{ old('sntransaction', $Warranty->tblitemwarrant_SN) }}">
                     </div>
                     <div class="mb-3">
                         <label for="dok-bukti" class="col-form-label">Dokumen Bukti :</label>
-                        <input type="text" class="form-control" name="dokbukti" id="dok-bukti"
+                        <input type="text" class="form-control" name="dokbukti" id="dok-bukti" disabled
                             value="{{ old('dokbukti', $Warranty->tblitemwarrant_dokBukti) }}">
                     </div>
                     <div class="mb-3">
                         <label for="distributor-id" class="col-form-label">Distributor :</label>
-                        <input type="text" class="form-control" name="distributorname" id="distributor-id"
+                        <input type="text" class="form-control" name="distributorname" id="distributor-id" disabled
                             value="{{ old('distributorname', $Warranty->tblitemwarrant_distributor) }}">
                     </div>
                     <div class="mb-3">
                         <label for="pemakai-id" class="col-form-label">Pemakai :</label>
-                        <input type="text" class="form-control" name="pemakainame" id="pemakai-id"
+                        <input type="text" class="form-control" name="pemakainame" id="pemakai-id" disabled
                             value="{{ old('pemakainame', $Warranty->tblitemwarrant_username) }}">
                     </div>
                     <div class="mb-3">
                         <label for="lokasi-id" class="col-form-label">Lokasi :</label>
-                        <input type="text" class="form-control" name="lokasiname" id="lokasi-id"
+                        <input type="text" class="form-control" name="lokasiname" id="lokasi-id" disabled
                             value="{{ old('lokasiname', $Warranty->tblitemwarrant_location) }}">
                     </div>
                     <div class="mb-3">
                         <label for="tanggal-beli-id" class="col-form-label">Tanggal Pembelian : </label>
 
-                        <input type="date" class="form-control" name="tanggalbeliname"
-                            value="{{ old('tanggalbeliname', date('Y-m-d', strtotime($Warranty->tblitemwarrant_purchaseDate)), date('Y-m-d')) }}"
+                        <input type="date" class="form-control" name="tanggalbeliname" disabled
+                            value="{{ old('tanggalbeliname', \Carbon\Carbon::parse($Warranty->tblitemwarrant_purchaseDate)->format('Y-m-d'), date('Y-m-d')) }}"
                             id="tanggal-beli-id">
                         {{-- <p>{{ $Warranty->tblitemwarrant_purchaseDate }}</p> --}}
                     </div>
                     <div class="mb-3">
                         <label for="period-id" class="col-form-label">Periode Bulan :</label>
-                        <input type="number" class="form-control" min="1"
+                        <input type="number" class="form-control" min="1" disabled
                             value="{{ old('periodname', $Warranty->tblitemwarrant_monthPeriod) }}" max="100"
                             name="periodname" id="period-id">
                     </div>
                     <div class="mb-3">
                         <label for="status-id" class="col-form-label">Status :</label>
-                        <select class="form-control" name="statusname" id="status-id">
+                        <select class="form-control" name="statusname" id="status-id" disabled>
                             @foreach ($codeStatus as $key => $row)
                                 <option value="{{ $row->tblitemstatus_id }}"
                                     {{ $Warranty->tblitemstatus_id == $row->tblitemstatus_id ? 'selected' :  '' }}>
@@ -91,7 +99,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="catatan-id" class="col-form-label">Catatan :</label>
-                        <textarea name="note" class="form-control"
+                        <textarea name="note" class="form-control" disabled
                             id="note-id">{{ old('note', $Warranty->tblitemwarrant_note) }}</textarea>
                         <div class="mb-3">
                         </div>
@@ -106,7 +114,7 @@
                             </div>
                         @endif
                     </div>
-                    <button type="submit" id="submitbtn" class="btn btn-primary">{{ __('Simpan') }}</button>
+                    {{-- <button type="submit" id="submitbtn" class="btn btn-primary">{{ __('Simpan') }}</button> --}}
                     <a href="{{ route('warranty') }}">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
                     </a>

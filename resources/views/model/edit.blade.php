@@ -1,7 +1,10 @@
 @extends('layouts.app')
+@section('title')
+    Edit Model
+@endsection
 @section('content')
-    <div class="pl-3 pt-4">
-        <div class="pb-3">
+    <div class="container">
+        <div class="row">
             <div class="col">
                 <form action="{{ route('model.edit.detail',$model->tblitemmodel_id) }}" method="POST">
                     @csrf
@@ -14,7 +17,7 @@
                         <select class="form-control" name="categorycode" id="category-code">
                             @foreach ($codeCategory as $key => $row)
                                 <option value="{{ $row->tblitemcategory_id }}"
-                                    {{ $model->tblitemcategory_id == $key ? 'selected' : '' }}>
+                                    {{ $model->tblitemcategory_id == ($key+1) ? 'selected' : '' }}>
                                     {{ $row->tblitemcategory_code }} -
                                     {{ $row->tblitemcategory_name }}</option>
                             @endforeach
@@ -27,12 +30,13 @@
                         <label for="brand-code" class="col-form-label">Kode Merek :</label>
                         <select class="form-control" name="brandcode" id="brand-code">
                             @foreach ($codeBrand as $key => $row)
-                                <option value="{{ $row->tblitembrand_id }}"
-                                    {{  $model->tblitembrand_id == $key ? 'selected' : '' }}>{{ $row->tblitembrand_code }} -
-                                    {{ $row->tblitembrand_name }}</option>
-                            @endforeach
-                        </select>
 
+                                <option value="{{ $row->tblitembrand_id }}"
+                                    {{  $model->tblitembrand_id == ($key+1) ? 'selected' : '' }}>{{ $row->tblitembrand_code }} -
+                                    {{ $row->tblitembrand_name }}</option>
+
+                                    @endforeach
+                        </select>
 
                     </div>
 

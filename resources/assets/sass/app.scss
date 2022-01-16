@@ -3,22 +3,42 @@
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~mdb-ui-kit/css/mdb.min.css';
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+@mixin animate($animation, $duration, $method, $times) {
+    animation: $animation $duration $method $times;
 }
 
-.navbar-nav a{
+@mixin keyframes($name) {
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+@function get-vw($target) {
+    $vw-context: (1000*.01) * 1px;
+    @return ($target/$vw-context) * 1vw;
+}
+
+.textWhite {
+    color: whitesmoke;
+}
+
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.navbar-nav a {
     color: black;
 }
 
@@ -26,11 +46,212 @@
     text-transform: uppercase;
 }
 
-.btnEdit{
+.btnEdit {
     font-family: 'Nunito';
     display: inline;
 }
 
-.limitDescriptionText{
+.limitDescriptionText {
     width: 15px;
+}
+
+
+html,
+body {
+    // background-color: #fff;
+    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 100;
+    height: 100vh;
+    margin: 0;
+}
+
+#background {
+    background-image: linear-gradient(90deg, rgb(23, 165, 231), rgb(129, 214, 253));
+
+}
+
+.line {
+    width: get-vw(400px);
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @include keyframes(backgroundLineKF) {
+        0% {
+            background: #fff;
+        }
+
+        50% {
+            background: rgb(133, 133, 133);
+        }
+
+        100% {
+            background: rgb(255, 255, 255);
+        }
+    }
+
+    @include animate(backgroundLineKF, 10s, linear, infinite);
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+
+.title {
+    @media screen and (max-width: $breakpoint-tablet) {
+        font-size: 2rem;
+        opacity: 1;
+        font-family: 'Nunito';
+    }
+
+    @media screen and (min-width: $breakpoint-tablet) {
+        font-size: 3.5rem;
+        opacity: 1;
+        font-family: 'Nunito';
+    }
+
+    @include keyframes(fade) {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @include animate(fade, 1s, linear, 1);
+}
+
+
+.links>a {
+    background-color: rgba(rgb(255, 198, 198), 0.2);
+    color: #000000;
+    padding: 5px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 10px;
+
+
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+.table tbody .RowNumber {
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: none;
+    }
+}
+
+.table thead {
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: none;
+    }
+}
+
+.table {
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: block;
+    }
+}
+
+.table tbody {
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: block;
+    }
+}
+
+.table tr {
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: block;
+        margin-bottom: 15px;
+    }
+}
+
+.table td {
+    @media screen and (max-width: $breakpoint-tablet) {
+        display: block;
+        text-align: right;
+        padding-left: 20%;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        /* Don't forget this one */
+        text-overflow: ellipsis;
+    }
+}
+
+.table td::before {
+    @media screen and (max-width: $breakpoint-tablet) {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 10%;
+        padding-left: 15px;
+        font-size: 15px;
+    }
+}
+
+.errorModal {
+    background-color: rgb(255, 44, 44);
+}
+
+.successModal {
+    background-color: lightgreen;
+}
+
+.cardShadow {
+    box-shadow: 0 8px 16px 0 rgba(rgb(0, 0, 0), .3);
+}
+
+.EmptyTable {
+    align-self: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+}
+
+.Oswald {
+    @media screen and (max-width: $breakpoint-tablet) {
+        font-family: 'Oswald', sans-serif;
+        font-size: medium;
+        padding-left: 50% !important;
+    }
+
+    font-family: 'Oswald',
+    sans-serif;
+    font-size: large;
 }

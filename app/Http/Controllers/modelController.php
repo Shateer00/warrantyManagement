@@ -7,10 +7,20 @@ use App\itemCategory;
 use App\itemBrand;
 use App\itemModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class modelController extends Controller
 {
+    public $messages = [
+        'categorycode.required' => 'Kategori tidak dipilih',
+        'brandcode.required' => 'Merek tidak dipilih',
+        'modelcode.required' => 'Kode Model wajib diisi',
+        'modelcode.unique' => 'Kode Model sudah ada sebelumnya.',
+        'modelname.required' => 'Deskripsi Model wajib diisi',
+        'modelname.max' => 'Deskripsi Model Maximal :max Karakter.',
+        'modelname.unique' => 'Deskripsi Model sudah ada sebelumnya.',
+    ];
     /**
      * Create a new controller instance.
      *
@@ -28,28 +38,21 @@ class modelController extends Controller
         $codeBrand = itemBrand::orderBy('tblitembrand_code','asc')->get();
         $model = itemModel::join('tbl_gr_m_item_category','tbl_gr_m_item_category.tblitemcategory_id','=','tbl_gr_m_item_model.tblitemcategory_id')->join('tbl_gr_m_item_brand','tbl_gr_m_item_brand.tblitembrand_id','=','tbl_gr_m_item_model.tblitembrand_id')->orderBy('tblitemmodel_codeModel','asc')->paginate(10);
         $requestParam = '';
-        // dd($model);
-        // $req = '';
 
         return view('model.index', compact('codeCategory','codeBrand','model','requestParam'));
     }
 
     public function add(Request $req)
     {
-        $messages = [
-            'categorycode.required' => 'Kategori tidak dipilih',
-            'brandcode.required' => 'Merek tidak dipilih',
-            'modelcode.required' => 'Kode Model wajib diisi',
-            'modelname.required' => 'Deskripsi Model wajib diisi',
-        ];
+
 
 
         $validator = Validator::make($req->all(),[
-            'modelcode' => 'required',
+            'modelcode' => 'required|unique:tbl_gr_m_item_model,tblitemmodel_codeModel',
             'categorycode' => 'required',
             'brandcode' => 'required',
-            'modelname' => 'required',
-        ],$messages);
+            'modelname' => 'required|max:50|unique:tbl_gr_m_item_model,tblitemmodel_descriptionModel',
+        ],$this->messages);
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -66,6 +69,7 @@ class modelController extends Controller
         $model->tblitemmodel_createdBy = $idAuth;
         $model->tblitemmodel_modifyBy = $idAuth;
         $model->save();
+         Session::flash('success','Data berhasil tertambah');
 
         return redirect()->back();
     }
@@ -90,20 +94,13 @@ class modelController extends Controller
     {
         $model = itemModel::find($id);
 
-        $messages = [
-            'categorycode.required' => 'Kategori tidak dipilih',
-            'brandcode.required' => 'Merek tidak dipilih',
-            'modelcode.required' => 'Kode Model wajib diisi',
-            'modelname.required' => 'Deskripsi Model wajib diisi',
-        ];
-
 
         $validator = Validator::make($req->all(),[
             'modelcode' => 'required',
             'categorycode' => 'required',
             'brandcode' => 'required',
-            'modelname' => 'required',
-        ],$messages);
+            'modelname' => 'required|max:50',
+        ],$this->messages);
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -121,12 +118,18 @@ class modelController extends Controller
         $model->tblitemmodel_modifyBy = $idAuth;
         $model->save();
 
+        Session::flash('success','Data berhasil terupdate');
+
+
         return redirect(route('model'));
     }
 
     public function search(Request $req){
 
-
+        if($req->param == ""){
+            Session::flash('error','Pencarian tidak terisi');
+            return redirect()->back();
+        }
         $codeCategory = itemCategory::orderBy('tblitemcategory_code','asc')->get();
         $codeBrand = itemBrand::orderBy('tblitembrand_code','asc')->get();
         $model = itemModel::join('tbl_gr_m_item_category','tbl_gr_m_item_category.tblitemcategory_id','=','tbl_gr_m_item_model.tblitemcategory_id')->

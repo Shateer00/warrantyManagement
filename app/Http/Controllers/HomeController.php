@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\itemBrand;
+use App\itemCategory;
+use App\itemModel;
+use App\itemStatus;
+use App\itemWarranty;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,6 +29,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $current = Carbon::now('WIB');
+        // dd($current);
+
+        $totalBrand = itemBrand::count();
+        $totalCategory = itemCategory::count();
+        $totalModel = itemModel::count();
+        $totalWarranty = itemWarranty::count();
+
+        return view('home',
+        [
+            'currentDate'=>$current,
+            'totalBrand'=>$totalBrand ,
+            'totalCategory'=>$totalCategory,
+            'totalModel'=>$totalModel,
+            'totalWarranty'=>$totalWarranty
+        ]);
     }
 }

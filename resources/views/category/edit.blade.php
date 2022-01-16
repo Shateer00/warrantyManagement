@@ -1,7 +1,10 @@
 @extends('layouts.app')
+@section('title')
+    Edit Kategori
+@endsection
 @section('content')
-    <div class="pl-3 pt-4">
-        <div class="pb-3">
+    <div class="container">
+        <div class="row">
             <div class="col">
                 <form action="{{ route('category.edit.detail', $category->tblitemcategory_id) }}" method="POST">
                     @csrf

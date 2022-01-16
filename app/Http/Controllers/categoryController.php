@@ -5,10 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\itemCategory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class categoryController extends Controller
 {
+    public $messages = [
+        'categorycode.required' => 'Kode Kategori wajib diisi',
+        'categorycode.min' => 'Kode Kategori Minimal :min Karakter',
+        'categorycode.max' => 'Kode Kategori Maximal :max Karakter',
+        'categorycode.unique' => 'Kode Kategori sudah ada sebelumnya.',
+        'categoryname.required' => 'Nama Kategori wajib diisi',
+        'categoryname.max' => 'Nama Kategori Maximal :max Karakter.',
+        'categoryname.unique' => 'Nama Kategori sudah ada sebelumnya.',
+    ];
     /**
      * Create a new controller instance.
      *
@@ -31,21 +41,10 @@ class categoryController extends Controller
     public function add(Request $req)
     {
 
-        $messages = [
-            'categorycode.required' => 'Kode Kategori wajib diisi',
-            'categoryname.required' => 'Nama Kategori wajib diisi',
-            'categorycode.min' => 'Kode Kategori Minimal :min Karakter',
-            'categorycode.max' => 'Kode Kategori Maximal :max Karakter',
-            'categorycode.unique' => 'Kode Kategori sudah ada sebelumnya.',
-            'categoryname.unique' => 'Nama Kategori sudah ada sebelumnya.'
-
-        ];
-
-
         $validator = Validator::make($req->all(), [
             'categorycode' => 'required|min:4|max:4|unique:tbl_gr_m_item_category,tblitemcategory_code',
-            'categoryname' => 'required|unique:tbl_gr_m_item_category,tblitemcategory_name',
-        ], $messages);
+            'categoryname' => 'required|max:50|unique:tbl_gr_m_item_category,tblitemcategory_name',
+        ], $this->messages);
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -60,6 +59,9 @@ class categoryController extends Controller
         $category->tblitemcategory_createdBy = $idAuth;
         $category->tblitemcategory_modifyBy = $idAuth;
         $category->save();
+
+
+        Session::flash('success','Data berhasil tertambah');
 
         return redirect()->back();
     }
@@ -82,21 +84,10 @@ class categoryController extends Controller
     {
         $category = itemCategory::find($id);
 
-        $messages = [
-            'categorycode.required' => 'Kode Kategori wajib diisi',
-            'categoryname.required' => 'Nama Kategori wajib diisi',
-            'categorycode.min' => 'Kode Kategori Minimal :min Karakter',
-            'categorycode.max' => 'Kode Kategori Maximal :max Karakter',
-            'categorycode.unique' => 'Kode Kategori sudah ada sebelumnya.',
-            'categoryname.unique' => 'Nama Kategori sudah ada sebelumnya.'
-
-        ];
-
-
         $validator = Validator::make($req->all(), [
             'categorycode' => 'required|min:4|max:4',
-            'categoryname' => 'required',
-        ], $messages);
+            'categoryname' => 'required|max:50',
+        ], $this->messages);
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -110,12 +101,18 @@ class categoryController extends Controller
         $category->tblitemcategory_createdBy = $idAuth;
         $category->tblitemcategory_modifyBy = $idAuth;
         $category->save();
+
+        Session::flash('success','Data berhasil terupdate');
         return redirect(route('category'));
     }
 
     public function search(Request $req)
     {
 
+        if($req->param == ""){
+            Session::flash('error','Pencarian tidak terisi');
+            return redirect()->back();
+        }
         $category = itemCategory::where('tblitemcategory_name', 'like', $req->param . '%')->orWhere('tblitemcategory_code', 'like', $req->param . '%')->orderBy('tblitemcategory_createdOn', 'desc')->paginate(10);
         $requestParam = $req->param;
 

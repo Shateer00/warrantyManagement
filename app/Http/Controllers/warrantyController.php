@@ -8,28 +8,51 @@ use App\itemBrand;
 use App\itemModel;
 use App\itemStatus;
 use App\itemWarranty;
+use DateTimeZone;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\Environment\Console;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class warrantyController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
+        $currentDate =Carbon::now('Asia/Jakarta') ;
         $codeCategory = itemCategory::orderBy('tblitemcategory_code', 'asc')->get();
         $codeBrand =    itemBrand::orderBy('tblitembrand_code', 'asc')->get();
         $codeStatus = itemStatus::orderBy('tblitemstatus_id', 'asc')->get();
         // $Warranty = itemWarranty::orderBy('tblitemwarranty_id','asc')->join()->get();
         // $codeModel = itemModel::orderBy('tblitemmodel_codeModel', 'asc')->get();
-        $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')->orderBy('tblitemmodel_codeModel', 'asc')->paginate(10);
+        $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')
+        ->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')
+        ->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')
+        ->join('tbl_gr_m_item_status', 'tbl_gr_m_item_status.tblitemstatus_id', '=', 'tbl_gr_t_item_warranty.tblitemstatus_id')
+        ->orderBy('tblitemmodel_codeModel', 'asc')
+        ->paginate(10);
+
+        // $WarrantyDate = $Warranty->pluck('tblitemwarrant_purchaseDate');
+        // dd($WarrantyDate);
+        // dd(Carbon::createFromFormat('Y-m-d H:i:s',$WarrantyDate));
+
         $requestParam = '';
         // ->join('contacts', 'users.id', '=', 'contacts.user_id')
         //     ->join('orders', 'users.id', '=', 'orders.user_id')
         //     ->select('users.*', 'contacts.phone', 'orders.price')
         //     ->get();
 
-        return view('warranty.index', compact('codeCategory', 'codeBrand', 'codeStatus', 'Warranty', 'requestParam'));
+        return view('warranty.index', compact('codeCategory', 'codeBrand', 'codeStatus', 'Warranty', 'requestParam','currentDate'));
     }
 
     public function getModel(Request $req)
@@ -126,6 +149,9 @@ class warrantyController extends Controller
         $transaction->tblitemwarrant_modifyBy = $idAuth;
         $transaction->save();
 
+
+        Session::flash('success','Data berhasil tertambah');
+
         return redirect()->back();
     }
 
@@ -196,7 +222,7 @@ class warrantyController extends Controller
         $transaction->save();
 
 
-
+        Session::flash('success','Data berhasil terupdate');
         return redirect(route('warranty'));
     }
 
@@ -207,14 +233,39 @@ class warrantyController extends Controller
         $codeStatus = itemStatus::orderBy('tblitemstatus_id', 'asc')->get();
         // $Warranty = itemWarranty::orderBy('tblitemwarranty_id','asc')->join()->get();
         // $codeModel = itemModel::orderBy('tblitemmodel_codeModel', 'asc')->get();
-        $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')->orderBy('tblitemmodel_codeModel', 'asc')->find($id);
+        $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')
+        ->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')
+        ->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')
+        ->join('tbl_gr_m_item_status', 'tbl_gr_m_item_status.tblitemstatus_id', '=', 'tbl_gr_t_item_warranty.tblitemstatus_id')
+        ->orderBy('tblitemmodel_codeModel', 'asc')
+        ->find($id);
 
         return view('warranty.edit', compact('Warranty', 'codeCategory', 'codeBrand', 'codeStatus'));
     }
 
+    public function view($id)
+    {
+        $codeCategory = itemCategory::orderBy('tblitemcategory_code', 'asc')->get();
+        $codeBrand =    itemBrand::orderBy('tblitembrand_code', 'asc')->get();
+        $codeStatus = itemStatus::orderBy('tblitemstatus_id', 'asc')->get();
+        // $Warranty = itemWarranty::orderBy('tblitemwarranty_id','asc')->join()->get();
+        // $codeModel = itemModel::orderBy('tblitemmodel_codeModel', 'asc')->get();
+        $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')
+        ->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')
+        ->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')
+        ->join('tbl_gr_m_item_status', 'tbl_gr_m_item_status.tblitemstatus_id', '=', 'tbl_gr_t_item_warranty.tblitemstatus_id')
+        ->orderBy('tblitemmodel_codeModel', 'asc')
+        ->find($id);
+
+        return view('warranty.view', compact('Warranty', 'codeCategory', 'codeBrand', 'codeStatus'));
+    }
+
     public function search(Request $req)
     {
-
+        if($req->param == ""){
+            Session::flash('error','Pencarian tidak terisi');
+            return redirect()->back();
+        }
 
         $codeCategory = itemCategory::orderBy('tblitemcategory_code', 'asc')->get();
         $codeBrand =    itemBrand::orderBy('tblitembrand_code', 'asc')->get();
