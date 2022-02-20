@@ -14647,13 +14647,12 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(41);
 
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
-
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -14663,6 +14662,7 @@ module.exports = __webpack_require__(40);
 
 __webpack_require__(16);
 __webpack_require__(39);
+__webpack_require__(40);
 
 /**
  * Next, we will create a fresh React component instance and attach it to
@@ -14673,7 +14673,6 @@ __webpack_require__(39);
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
-
 
 window._ = __webpack_require__(17);
 window.Popper = __webpack_require__(4).default;
@@ -14686,7 +14685,6 @@ window.Popper = __webpack_require__(4).default;
 
 try {
   window.$ = window.jQuery = __webpack_require__(5);
-
   __webpack_require__(19);
 } catch (e) {}
 
@@ -37623,6 +37621,33 @@ ModalSuccessShow = function ModalSuccessShow() {
 
 /***/ }),
 /* 40 */
+/***/ (function(module, exports) {
+
+CreateDashboardSummaryChart = function CreateDashboardSummaryChart(x, totalBrand, totalCategory, totalModel, totalWarranty) {
+    var TheChart = new Chart(x, {
+        type: 'doughnut',
+        data: {
+            labels: ['Merek', 'Kategori', 'Model', 'Garansi'],
+            datasets: [{
+                label: 'Total Data',
+                data: [totalBrand, totalCategory, totalModel, totalWarranty],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};
+
+/***/ }),
+/* 41 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
