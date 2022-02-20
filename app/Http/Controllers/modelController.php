@@ -36,7 +36,7 @@ class modelController extends Controller
 
         $codeCategory = itemCategory::orderBy('tblitemcategory_code','asc')->get();
         $codeBrand = itemBrand::orderBy('tblitembrand_code','asc')->get();
-        $model = itemModel::sortable()->join('tbl_gr_m_item_category','tbl_gr_m_item_category.tblitemcategory_id','=','tbl_gr_m_item_model.tblitemcategory_id')->join('tbl_gr_m_item_brand','tbl_gr_m_item_brand.tblitembrand_id','=','tbl_gr_m_item_model.tblitembrand_id')->orderBy('tblitemmodel_codeModel','asc')->paginate(10);
+        $model = itemModel::join('tbl_gr_m_item_category','tbl_gr_m_item_category.tblitemcategory_id','=','tbl_gr_m_item_model.tblitemcategory_id')->join('tbl_gr_m_item_brand','tbl_gr_m_item_brand.tblitembrand_id','=','tbl_gr_m_item_model.tblitembrand_id')->orderBy('tblitemmodel_codeModel','asc')->paginate(10);
         $requestParam = '';
 
         return view('model.index', compact('codeCategory','codeBrand','model','requestParam'));
@@ -48,10 +48,10 @@ class modelController extends Controller
 
 
         $validator = Validator::make($req->all(),[
+            'modelcode' => 'required|unique:tbl_gr_m_item_model,tblitemmodel_codeModel',
             'categorycode' => 'required',
             'brandcode' => 'required',
-            'modelcode' => 'required|max:50|unique:tbl_gr_m_item_model,tblitemmodel_codeModel',
-            'modelname' => 'required|max:350|unique:tbl_gr_m_item_model,tblitemmodel_descriptionModel',
+            'modelname' => 'required|max:50|unique:tbl_gr_m_item_model,tblitemmodel_descriptionModel',
         ],$this->messages);
 
         if ($validator->fails()) {
@@ -96,10 +96,10 @@ class modelController extends Controller
 
 
         $validator = Validator::make($req->all(),[
+            'modelcode' => 'required',
             'categorycode' => 'required',
             'brandcode' => 'required',
-            'modelcode' => 'required|max:50|unique:tbl_gr_m_item_model,tblitemmodel_codeModel',
-            'modelname' => 'required|max:350|unique:tbl_gr_m_item_model,tblitemmodel_descriptionModel',
+            'modelname' => 'required|max:50',
         ],$this->messages);
 
         if ($validator->fails()) {

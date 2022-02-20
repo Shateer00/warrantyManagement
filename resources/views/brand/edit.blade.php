@@ -22,8 +22,8 @@ Edit Merek
                     <label for="brand-name">Nama Merek</label>
                 </div>
                 @if ($errors->any() && old('action') == 'edit')
-                <div class="alert alert-danger mb-4">
-                    <ul class="mb-0">
+                <div class="alert alert-danger">
+                    <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                         @endforeach

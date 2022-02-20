@@ -22,7 +22,6 @@
     <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {{-- <script src="sweetalert2.min.js"></script> --}}
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -30,28 +29,26 @@
     <!-- Styles -->
 
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{--
-    <link rel="stylesheet" href="sweetalert2.min.css"> --}}
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel=”stylesheet” href=”https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
-
 <body id="background">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                @auth
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                @else
+                @guest
                 <a class="navbar-brand" href="{{ route('welcome') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                @endauth
+                @else
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -61,30 +58,36 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @auth
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="{{ route('brand') }}">{{ __('Merek') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="{{ route('category') }}">{{ __('Kategori') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="{{ route('model') }}">{{ __('Model') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="{{ route('warranty') }}">{{ __('Garansi') }}</a>
-                        </li>
-
-                        @else
+                        @guest
                         <li>
 
                         </li>
-                        @endauth
+                        @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('brand') }}">{{ __('Merek') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('category') }}">{{ __('Kategori') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('model') }}">{{ __('Model') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('warranty') }}">{{ __('Garansi') }}</a>
+                        </li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto" <!-- Authentication Links -->
-                        @auth
+                        @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
@@ -104,15 +107,7 @@
                                 </form>
                             </div>
                         </li>
-
-                        @else
-                        <li class="nav-item">
-                            <a class="nav-link navbarCustomText" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbarCustomText" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                        @endauth
+                        @endguest
                     </ul>
                 </div>
             </div>

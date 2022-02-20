@@ -6,8 +6,8 @@ Kategori
 <div class="pl-3 pt-4 pr-3 pb-4">
     <div class="row">
         <div class="pt-3 pl-3 pb-3 col-md">
-            <button type="button" id="buttonAddCategory" class="btn btn-dark" data-toggle="modal" data-backdrop="static"
-                data-keyboard="false" data-target="#createModal" data-whatever="@mdo"><i
+            <button type="button" id="buttonAddCategory" class="btn btn-primary" data-toggle="modal"
+                data-backdrop="static" data-keyboard="false" data-target="#createModal" data-whatever="@mdo"><i
                     class="fas fa-plus"></i></button>
         </div>
         <div class="pt-3 pl-3 pb-3 col-md-4">
@@ -25,29 +25,32 @@ Kategori
     </div>
 
     <div class="col-12">
-        <h3 class="text-dark">List Kategori Barang</h3>
+        <h3 class="textWhite">List Kategori Barang</h3>
         @if (count($category) == 0)
-        <div class="align-items-center justify-content-center flex-row d-flex py-4">
-            <div class="card bg-info flex-center">
+        <div class="border ">
+            <div class="card ">
                 <div class="card-body EmptyTable">
-                    <a class="text-white">Data Kategori belum ada / Tidak ditemukan</a>
+                    Data Kategori belum ada.
                 </div>
             </div>
         </div>
         @else
-        <table class="table table-bordered" id="TheTable">
+        <table class="table table-bordered">
             <thead class="table-info">
                 <tr>
-                    <th scope="col" class="col-1" class="Oswald">
+                    <th scope="col" class="col-1">
                         Nomor
                     </th>
-                    <th scope="col" class="col-1" class="Oswald">
-                        @sortablelink('tblitemcategory_code','Kode Kategori')
+                    {{-- <th scope="col">
+                        ID Kategori
+                    </th> --}}
+                    <th scope="col" class="col-1">
+                        Kode Kategori
                     </th>
-                    <th scope="col" class="col-8" class="Oswald">
-                        @sortablelink('tblitemcategory_name','Nama Kategori')
+                    <th scope="col" class="col-8">
+                        Nama Kategori
                     </th>
-                    <th scope="col" class="col-2" class="Oswald">
+                    <th scope="col" class="col-2">
                         Sub Menu
                     </th>
                 </tr>
@@ -55,18 +58,22 @@ Kategori
             <tbody>
                 @foreach ($category as $key => $row)
                 <tr>
-                    <td data-label="Nomor" class="RowNumber Oswald">
+                    <td data-label="Nomor" class="RowNumber">
                         {{ $category->firstItem() + $key }}
                     </td>
-                    <td data-label="Kode" class="Oswald">
+                    <td data-label="Kode">
                         {{ $row->tblitemcategory_code }}
                     </td>
-                    <td data-label="Kode" class="Oswald">
+                    <td data-label="Kode">
                         {{ $row->tblitemcategory_name }}
                     </td>
                     <td class="text-center">
+                        {{-- <button type="button" data-id="{{ $row->tblitemcategory_id }}"
+                            data-name="{{ $row->tblitemcategory_name }}" data-code="{{ $row->tblitemcategory_code }}"
+                            class="btn btn-primary buttonEditcategory" data-toggle="modal" data-target="#editModal"
+                            data-whatever="@mdo">Edit</button> --}}
                         <a class="btn btn-primary" href="{{ route('category.edit', $row->tblitemcategory_id) }}">
-                            <span class="btnEdit"><i class="fas fa-edit"></i>&nbsp;Edit</span>
+                            <p class="btnEdit"><i class="fas fa-edit"></i></p>
                         </a>
 
                     </td>
@@ -74,8 +81,8 @@ Kategori
                 @endforeach
             </tbody>
         </table>
-        {!! $category->appends(\Request::except('page'))->render() !!}
-        {{-- {{ $category->links() }} --}}
+
+        {{ $category->links() }}
         @endif
     </div>
 
@@ -98,25 +105,24 @@ Kategori
                 @csrf
                 <div class="modal-body">
 
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control upperText" id="category-code" name="categorycode"
-                            maxlength="4" for="category-code" value="{{ old('categorycode') }}"
-                            placeholder="Kode Kategori">
-
-                        <label for="category-code">Kode Kategori</label>
-
+                    <div class="mb-3">
+                        <label for="category-code" class="col-form-label">Kode Kategori :</label>
                         <input type="hidden" name="action" value="create">
+                        <input type="text" class="form-control upperText" id="category-code" name="categorycode"
+                            maxlength="4" value="{{ old('categorycode') }}">
 
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="category-name" name="categoryname"
-                            value="{{ old('categoryname') }}" for="category-name" placeholder="Nama Kategori">
+                    <div class="mb-3">
+                        <label for="category-name" class="col-form-label">Nama Kategori :</label>
 
-                        <label for="category-name">Nama Kategori :</label>
+                        <input type="text" class="form-control" id="category-name" name="categoryname"
+                            value="{{ old('categoryname') }}">
+
+
                     </div>
                     @if ($errors->any() && old('action') == 'create')
-                    <div class="alert alert-danger mb-4">
-                        <ul class="mb-0">
+                    <div class="alert alert-danger">
+                        <ul>
 
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -134,13 +140,41 @@ Kategori
         </div>
     </div>
 </div>
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true"
+    role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header errorModal">
+                <h5 class="modal-title"><i class="fas fa-exclamation"></i>&nbsp;Error Message</h5>
+            </div>
+            <div class="modal-body">
+                {{ Session::get('error') }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<x-error-modal>
-</x-error-modal>
-
-<x-success-modal>
-</x-success-modal>
-
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+    aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header successModal">
+                <h5 class="modal-title"><i class="fas fa-check"></i>&nbsp;Success Message</h5>
+            </div>
+            {{--
+            <div class="modal-body">
+                {{ Session::get('success') }}
+            </div>
+            --}}
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 @if ($errors->any() && old('action') == 'create')
