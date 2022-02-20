@@ -19,4 +19,3 @@ ModalSuccessShow = function () {
         $('#successModal').modal('hide');
     }, 2000);
 };
-
