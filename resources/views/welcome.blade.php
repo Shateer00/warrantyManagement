@@ -1,53 +1,28 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
+@extends('layouts.welcome')
+@section('title')
+Home
+@endsection
+@section('content')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-
-<body id="background">
-    <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">Login</a>
-            <a href="{{ route('register') }}">Register</a>
-            @endauth
-        </div>
-        @endif
-        <div class="content">
-            <div class="container-fluid">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-sm py-4">
-                            <i class="fas fa-briefcase-medical blackcolor fa-6x"></i>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <p class="title">Warranty Management</p>
-                        </div>
-                    </div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="col">
+            <div class="row">
+                <div class="col-sm py-4">
+                    <i class="fas fa-briefcase-medical blackcolor fa-6x"></i>
                 </div>
-                <div class="col">
-                    <div class="line"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p class="title">Warranty Management</p>
                 </div>
             </div>
         </div>
-
+        <div class="col">
+            <div class="line"></div>
+        </div>
     </div>
-</body>
-
-</html>
+</div>
+@endsection
+@section('script')
+@endsection

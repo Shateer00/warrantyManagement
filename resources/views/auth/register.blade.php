@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.welcome')
 @section('title')
 Register
 @endsection
@@ -20,7 +20,7 @@ Register
                             <div class="col-md-6">
                                 <input id="name" type="text"
                                     class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                value="{{ old('name') }}" placeholder="Enter Name" required autofocus>
+                                    value="{{ old('name') }}" placeholder="Enter Name" required autofocus>
 
                                 @if ($errors->has('name'))
                                 <span class="invalid-feedback" role="alert">

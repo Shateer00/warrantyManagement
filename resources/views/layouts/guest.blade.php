@@ -62,7 +62,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link font-weight-bold" href="{{ route('brand') }}">{{ __('Merek') }}</a>
                         </li>
                         <li class="nav-item">
@@ -73,6 +73,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link font-weight-bold" href="{{ route('warranty') }}">{{ __('Garansi') }}</a>
+                        </li> --}}
+                        <li>
+
                         </li>
                         @else
                         <li>
