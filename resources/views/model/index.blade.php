@@ -6,9 +6,10 @@ Model
 <div class="pl-3 pt-4 pr-3 pb-4">
     <div class="row">
         <div class="pt-3 pl-3 pb-3 col-md">
-            <button type="button" id="buttonAddModel" class="btn btn-primary" data-toggle="modal" data-backdrop="static"
-                data-keyboard="false" data-target="#createModal" data-whatever="@mdo"><i
-                    class="fas fa-plus"></i></button>
+            <button type="button" id="buttonAddModel" class="btn btn-dark" data-toggle="modal" data-backdrop="static"
+                data-keyboard="false" data-target="#createModal" data-whatever="@mdo">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
         <div class="pt-3 pl-3 pb-3 col-md-4">
             <form class="form-inline my-2 my-lg-0" action="{{ route('model.search') }}" method="get">
@@ -19,41 +20,41 @@ Model
                     value="{{ $requestParam }}">
                 @endif
                 <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                <a class="btn btn-secondary my-2 my-sm-0 ml-3" href="/model">Reset</a>
+                <a class="btn btn-secondary my-2 my-sm-0 ml-3" href="{{ route('model') }}">Reset</a>
             </form>
         </div>
     </div>
 
     <div class="col-12">
-        <h3 class="textWhite">List Model Barang</h3>
+        <h3 class="text-dark">List Model Barang</h3>
         @if (count($model) == 0)
-        <div class="border ">
-            <div class="card ">
+        <div class="align-items-center justify-content-center flex-row d-flex py-4">
+            <div class="card bg-info flex-center">
                 <div class="card-body EmptyTable">
-                    Data Model belum ada.
+                    <a class="text-white">Data Model belum ada / Tidak ditemukan</a>
                 </div>
             </div>
         </div>
         @else
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="TheTable">
             <thead class="table-info">
                 <tr>
-                    <th scope="col" class="col-1">
+                    <th scope="col" class="col-1 Oswald">
                         Nomor
                     </th>
-                    <th scope="col" class="col-1">
-                        Kategori
+                    <th scope="col" class="col-1 Oswald">
+                        @sortablelink('tblitemcategory_id','Kategori')
                     </th>
-                    <th scope="col" class="col-1">
-                        Merek
+                    <th scope="col" class="col-1 Oswald">
+                        @sortablelink('tblitembrand_id','Merek')
                     </th>
-                    <th scope="col" class="col-2">
-                        Kode Model
+                    <th scope="col" class="col-2 Oswald">
+                        @sortablelink('tblitemmodel_codeModel','Kode Model')
                     </th>
-                    <th scope="col" class="limitDescriptionText col-5">
-                        Deskripsi Model
+                    <th scope="col" class="limitDescriptionText  Oswald col-5">
+                        @sortablelink('tblitemmodel_descriptionModel','Deskripsi Model')
                     </th>
-                    <th class="col-2">
+                    <th class="col-2  Oswald">
                         Sub Menu
                     </th>
                 </tr>
@@ -61,33 +62,25 @@ Model
             <tbody>
                 @foreach ($model as $key => $row)
                 <tr>
-                    <td data-label="Nomor" class="RowNumber">
+                    <td data-label="Nomor" class="RowNumber  Oswald">
                         {{ $model->firstItem() + $key }}
                     </td>
-                    <td data-label="Kategori">
+                    <td data-label="Kategori" class=" Oswald">
                         {{ $row->tblitemcategory_code }} - {{ $row->tblitemcategory_name }}
                     </td>
-                    <td data-label="Merek">
+                    <td data-label="Merek" class=" Oswald">
                         {{ $row->tblitembrand_code }} - {{ $row->tblitembrand_name }}
                     </td>
-                    <td data-label="Model">
+                    <td data-label="Model" class=" Oswald">
                         {{ $row->tblitemmodel_codeModel }}
                     </td>
-                    <td data-label="Description">
-                        {{ Str::limit($row->tblitemmodel_descriptionModel, 10) }}
+                    <td data-label="Description" class=" Oswald">
+
+                        {{ $row->tblitemmodel_descriptionModel }}
                     </td>
-                    <td>
-                        {{-- <button type="button" data-id="{{ $row->tblitemmodel_id }}"
-                            data-name="{{ $row->tblitemmodel_descriptionModel }}"
-                            data-code="{{ $row->tblitemmodel_codeModel }}"
-                            data-categorydetail="{{ $row->tblitemcategory_id }}"
-                            data-branddetail="{{ $row->tblitembrand_id }}"
-                            data-category="{{ $row->tblitemcategory_code . ' - ' . $row->tblitemcategory_name }}"
-                            data-brand="{{ $row->tblitembrand_code . ' - ' . $row->tblitembrand_name }}"
-                            class="btn btn-primary buttonEditModel" data-toggle="modal" data-target="#editModal"
-                            data-whatever="@mdo">Edit</button> --}}
+                    <td class="text-center">
                         <a class="btn btn-primary" href="{{ route('model.edit', $row->tblitemmodel_id) }}">
-                            <p class="btnEdit"><i class="fas fa-edit"></i></p>
+                            <span class="btnEdit"><i class="fas fa-edit"></i>&nbsp;Edit</span>
                         </a>
 
                     </td>
@@ -95,8 +88,8 @@ Model
                 @endforeach
             </tbody>
         </table>
-
-        {{ $model->links() }}
+        {!! $model->appends(\Request::except('page'))->render() !!}
+        {{-- {{ $model->links() }} --}}
         @endif
     </div>
 
@@ -119,13 +112,8 @@ Model
                 @csrf
 
                 <div class="modal-body">
-                    <div class="mb-3">
-                        {{-- <label for="model-code" class="col-form-label">Kode Model :</label> --}}
-                        {{-- <input type="hidden" name="action" value="create">
-                        <input type="text" class="form-control" id="model-code" name="categorycode"
-                            value="{{ old('categorycode')}}"> --}}
-                        <label for="category-code" class="col-form-label">Kode Kategori :</label>
-                        <select class="form-control" name="categorycode" id="category-code">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="categorycode" id="category-code">
                             @foreach ($codeCategory as $key => $row)
                             <option value="{{ $row->tblitemcategory_id }}" {{ old('categorycode')==$row->
                                 tblitemcategory_id ? 'selected' : '' }}>
@@ -133,14 +121,10 @@ Model
                                 {{ $row->tblitemcategory_name }}</option>
                             @endforeach
                         </select>
+                        <label for="category-code" class="form-label">Kode Kategori</label>
                     </div>
-                    <div class="mb-3">
-                        {{-- <label for="model-name" class="col-form-label">Nama Model :</label>
-
-                        <input type="text" class="form-control" id="model-name" name="categoryname"
-                            value="{{old('categoryname')}}"> --}}
-                        <label for="brand-code" class="col-form-label">Kode Merek :</label>
-                        <select class="form-control" name="brandcode" id="brand-code">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="brandcode" id="brand-code">
                             @foreach ($codeBrand as $key => $row)
                             <option value="{{ $row->tblitembrand_id }}" {{ old('brandcode')==$row->tblitembrand_id ?
                                 'selected' : '' }}>{{ $row->tblitembrand_code }}
@@ -148,29 +132,24 @@ Model
                                 {{ $row->tblitembrand_name }}</option>
                             @endforeach
                         </select>
-
-
+                        <label for="brand-code" class="form-label">Kode Merek</label>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="model-code" class="col-form-label">Kode Model :</label>
+                    <div class="form-floating mb-3">
                         <input type="hidden" name="action" value="create">
                         <input type="text" class="form-control upperText" id="model-code" name="modelcode"
-                            value="{{ old('modelcode') }}">
-
+                            value="{{ old('modelcode') }}" placeholder="Kode Model">
+                        <label for="model-code">Kode Model</label>
                     </div>
 
-                    <label for="model-name" class="col-form-label">Deskripsi Model :</label>
-
-                    {{-- <input type="text" class="form-control" id="model-name" name="modelname"
-                        value="{{old('modelname')}}"> --}}
-                    <textarea name="modelname" class="form-control" id="model-name">{{ old('modelname') }}</textarea>
-                    <div class="mb-3">
-
+                    <div class="form-floating mb-3">
+                        <textarea name="modelname" class="form-control" id="model-name" placeholder="Deskripsi Model"
+                            style="height: 100px">{{ old('modelname') }}</textarea>
+                        <label for="model-name" class="col-form-label">Deskripsi Model</label>
                     </div>
                     @if ($errors->any() && old('action') == 'create')
-                    <div class="alert alert-danger">
-                        <ul>
+                    <div class="alert alert-danger mb-4">
+                        <ul class="mb-0">
 
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -188,41 +167,12 @@ Model
         </div>
     </div>
 </div>
-<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true"
-    role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header errorModal">
-                <h5 class="modal-title"><i class="fas fa-exclamation"></i>&nbsp;Error Message</h5>
-            </div>
-            <div class="modal-body">
-                {{ Session::get('error') }}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
+<x-error-modal>
+</x-error-modal>
 
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
-    aria-hidden="true" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header successModal">
-                <h5 class="modal-title"><i class="fas fa-check"></i>&nbsp;Success Message</h5>
-            </div>
-            {{--
-            <div class="modal-body">
-                {{ Session::get('success') }}
-            </div>
-            --}}
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
+<x-success-modal>
+</x-success-modal>
+
 @endsection
 @section('script')
 @if ($errors->any() && old('action') == 'create')

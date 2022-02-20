@@ -35,7 +35,7 @@ class warrantyController extends Controller
         $codeStatus = itemStatus::orderBy('tblitemstatus_id', 'asc')->get();
         // $Warranty = itemWarranty::orderBy('tblitemwarranty_id','asc')->join()->get();
         // $codeModel = itemModel::orderBy('tblitemmodel_codeModel', 'asc')->get();
-        $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')
+        $Warranty = itemWarranty::sortable()->join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')
         ->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')
         ->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')
         ->join('tbl_gr_m_item_status', 'tbl_gr_m_item_status.tblitemstatus_id', '=', 'tbl_gr_t_item_warranty.tblitemstatus_id')
@@ -167,7 +167,7 @@ class warrantyController extends Controller
     {
         $transaction = itemWarranty::find($id);
         $messages = [
-            'modelcodeedit.required' => 'Kode Model wajib diisi',
+            'modelcode.required' => 'Kode Model wajib diisi',
             'categorycodeedit.required' => 'Kode Katergori wajib diisi',
             'brandcodeedit.required' => 'Kode Merek wajib diisi',
             'sntransaction.required' => 'SN wajib diisi',
@@ -183,7 +183,7 @@ class warrantyController extends Controller
 
 
         $validator = Validator::make($req->all(), [
-            'modelcodeedit' => 'required',
+            'modelcode' => 'required',
             'categorycodeedit' => 'required',
             'brandcodeedit' => 'required',
             'sntransaction' => 'required',
@@ -203,7 +203,7 @@ class warrantyController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $transaction->tblitemmodel_id = $req->modelcodeedit;
+        $transaction->tblitemmodel_id = $req->modelcode;
         $transaction->tblitemwarrant_SN = $req->sntransaction;
         $transaction->tblitemwarrant_dokBukti = $req->dokbukti;
         $transaction->tblitemwarrant_distributor = $req->distributorname;
@@ -266,6 +266,7 @@ class warrantyController extends Controller
             Session::flash('error','Pencarian tidak terisi');
             return redirect()->back();
         }
+        $currentDate =Carbon::now('Asia/Jakarta') ;
 
         $codeCategory = itemCategory::orderBy('tblitemcategory_code', 'asc')->get();
         $codeBrand =    itemBrand::orderBy('tblitembrand_code', 'asc')->get();
@@ -278,6 +279,6 @@ class warrantyController extends Controller
         $Warranty = itemWarranty::join('tbl_gr_m_item_model', 'tbl_gr_t_item_warranty.tblitemmodel_id', '=', 'tbl_gr_m_item_model.tblitemmodel_id')->join('tbl_gr_m_item_category', 'tbl_gr_m_item_category.tblitemcategory_id', '=', 'tbl_gr_m_item_model.tblitemcategory_id')->join('tbl_gr_m_item_brand', 'tbl_gr_m_item_brand.tblitembrand_id', '=', 'tbl_gr_m_item_model.tblitembrand_id')->where('tblitemwarrant_SN', 'like', $req->param . '%')->orderBy('tblitemmodel_codeModel', 'asc')->paginate(10);
         $requestParam = $req->param;
 
-        return view('warranty.index', compact('codeCategory', 'codeBrand', 'codeStatus', 'Warranty', 'requestParam'));
+        return view('warranty.index', compact('codeCategory', 'codeBrand', 'codeStatus', 'Warranty', 'requestParam','currentDate'));
     }
 }

@@ -25,12 +25,12 @@ Garansi
     </div>
 
     <div class="col-12">
-        <h3 class="textWhite">List Garansi Barang</h3>
+        <h3 class="text-dark">List Garansi Barang</h3>
         @if (count($Warranty) == 0)
-        <div class="border ">
-            <div class="card ">
+        <div class="align-items-center justify-content-center flex-row d-flex py-4">
+            <div class="card bg-info flex-center">
                 <div class="card-body EmptyTable">
-                    Data Garansi belum ada.
+                    <a class="text-white">Data Garansi belum ada / Tidak ditemukan</a>
                 </div>
             </div>
         </div>
@@ -38,28 +38,28 @@ Garansi
         <table class="table table-bordered">
             <thead class="table-info">
                 <tr>
-                    <th scope="col" class="col-1">
+                    <th scope="col" class="col-1 Oswald">
                         Nomor
                     </th>
-                    <th scope="col" class="col-1">
-                        SN
+                    <th scope="col" class="col-1 Oswald">
+                        @sortablelink('tblitemwarrant_SN','SN')
                     </th>
-                    <th scope="col" class="col-2">
+                    <th scope="col" class="col-2 Oswald">
                         Kategori
                     </th>
-                    <th scope="col" class="col-2">
+                    <th scope="col" class="col-2 Oswald">
                         Merek
                     </th>
-                    <th scope="col" class="col-2">
-                        Model
+                    <th scope="col" class="col-2 Oswald">
+                        @sortablelink('tblitemmodel_id','Model')
                     </th>
-                    <th scope="col" class="col-1">
-                        Status
+                    <th scope="col" class="col-1 Oswald">
+                        @sortablelink('tblitemstatus_id','Status')
                     </th>
-                    <th scope="col" class="col-1">
+                    <th scope="col" class="col-1 Oswald">
                         Warranty
                     </th>
-                    <th scope="col" class="col-1">
+                    <th scope="col" class="col-1 Oswald">
                         Sub Menu
                     </th>
                 </tr>
@@ -67,28 +67,28 @@ Garansi
             <tbody>
                 @foreach ($Warranty as $key => $row)
                 <tr>
-                    <td>
+                    <td data-label="Nomor" class="RowNumber  Oswald">
                         {{ $Warranty->firstItem() + $key }}
                     </td>
-                    <td>
+                    <td data-label="SN" class=" Oswald">
                         {{ $row->tblitemwarrant_SN }}
                     </td>
-                    <td>
+                    <td data-label="Kategori" class=" Oswald">
 
                         {{ $row->tblitemcategory_code }} - {{ $row->tblitemcategory_name }}
                     </td>
-                    <td>
+                    <td data-label="Merek" class=" Oswald">
 
                         {{ $row->tblitembrand_code }} - {{ $row->tblitembrand_name }}
                     </td>
 
-                    <td>
+                    <td data-label="Model" class=" Oswald">
                         {{ Str::limit($row->tblitemmodel_codeModel . ' - ' . $row->tblitemmodel_descriptionModel, 30) }}
                     </td>
-                    <td bgcolor="{{ $row->tblitemstatus_colorCode }}">
+                    <td bgcolor="{{ $row->tblitemstatus_colorCode }}" data-label="Status" class=" Oswald">
                         {{ $row->tblitemstatus_name }}
                     </td>
-                    <td bgcolor="
+                    <td data-label="Warranty" class=" Oswald" bgcolor="
                                 @if (
                                 \Carbon\Carbon::parse($currentDate)->diffInDays(\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->addMonths($row->tblitemwarrant_monthPeriod),false)
                                     >=
@@ -105,67 +105,18 @@ Garansi
                                     #F12222
                                 @endif
                             ">
-                        {{-- {{ \Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->diffInDays($currentDate) }}
-                        --}}
                         <p style="font-weight: 600">Sisa Hari : {{
                             \Carbon\Carbon::parse($currentDate)->diffInDays(\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->addMonths($row->tblitemwarrant_monthPeriod),false)
                             }}</p>
-                        {{-- @if
-                        (\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->diffInDays(\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->addMonths($row->tblitemwarrant_monthPeriod))
-                        >= 30)
-                        Masih Berlaku
-                        @elseif
-                        (\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->diffInDays(\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->addMonths($row->tblitemwarrant_monthPeriod))
-                        >= 14)
-                        Sudah Hampir Habis
-                        @else
-                        Habis
-                        @endif --}}
-                        {{-- var_dump($currentDate) --}}
-                        {{-- Mulai : {{ \Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->format('d-m-Y') }}
-                        <br>
-                        Selesai : {{
-                        \Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->addMonths($row->tblitemwarrant_monthPeriod)->format('d-m-Y')
-                        }}
-                        <br>
-                        Sisa Hari : {{
-                        \Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->diffInDays(\Carbon\Carbon::parse($row->tblitemwarrant_purchaseDate)->addMonths($row->tblitemwarrant_monthPeriod))
-                        }} --}}
-                        {{-- {{ var_dump($row->tblitemwarrant_purchaseDate)}} --}}
-                        {{-- $row->tblitemwarrant_purchaseDate --}}
+
                     </td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('warranty.view', $row->tblitemwarranty_id) }}">
-                            <p class="btnEdit"><i class="fas fa-info"></i></p>
+                            <span class="btnEdit"><i class="fas fa-info"></i>&nbsp;Info</span>
                         </a>
                         <a class="btn btn-primary" href="{{ route('warranty.edit', $row->tblitemwarranty_id) }}">
-                            <p class="btnEdit"><i class="fas fa-edit"></i></p>
+                            <span class="btnEdit"><i class="fas fa-edit"></i>&nbsp;Edit</span>
                         </a>
-                        {{-- <button type="button" data-id="{{ $row->tblitemwarranty_id }}"
-                            data-modelid="{{ $row->tblitemmodel_id }}"
-                            data-categorydetail="{{ $row->tblitemcategory_id }}"
-                            data-branddetail="{{ $row->tblitembrand_id }}" data-sn="{{ $row->tblitemwarrant_SN }}"
-                            data-dokbukti="{{ $row->tblitemwarrant_dokBukti }}"
-                            data-distributor="{{ $row->tblitemwarrant_distributor }}"
-                            data-user="{{ $row->tblitemwarrant_username }}"
-                            data-location="{{ $row->tblitemwarrant_location }}"
-                            data-purchasedate="{{ $row->tblitemwarrant_purchaseDate }}"
-                            data-periodmonth="{{ $row->tblitemwarrant_monthPeriod }}"
-                            data-status="{{ $row->tblitemstatus_id }}" data-note="{{ $row->tblitemwarrant_note }}"
-                            class="btn btn-primary buttonViewModel" data-toggle="modal" data-target="#viewModal"
-                            data-whatever="@mdo">View</button>
-                        <button type="button" data-id="{{ $row->tblitemwarranty_id }}"
-                            data-categorydetail="{{ $row->tblitemcategory_id }}"
-                            data-branddetail="{{ $row->tblitembrand_id }}" data-sn="{{ $row->tblitemwarrant_SN }}"
-                            data-dokbukti="{{ $row->tblitemwarrant_dokBukti }}"
-                            data-distributor="{{ $row->tblitemwarrant_distributor }}"
-                            data-user="{{ $row->tblitemwarrant_username }}"
-                            data-location="{{ $row->tblitemwarrant_location }}"
-                            data-purchasedate="{{ $row->tblitemwarrant_purchaseDate }}"
-                            data-periodmonth="{{ $row->tblitemwarrant_monthPeriod }}"
-                            data-status="{{ $row->tblitemstatus_id }}" data-note="{{ $row->tblitemwarrant_note }}"
-                            class="btn btn-primary buttonEditModel" data-toggle="modal" data-target="#editModal"
-                            data-whatever="@mdo">Edit</button> --}}
 
                     </td>
                 </tr>
@@ -193,10 +144,11 @@ Garansi
                 @csrf
                 <div class="modal-body">
 
-                    <input type="hidden" name="action" value="create">
-                    <div class="mb-3">
-                        <label for="category-code" class="col-form-label">Kode Kategori :</label>
-                        <select class="form-control" name="categorycode" id="category-code">
+                    <div class="form-floating mb-3">
+
+                        <input type="hidden" name="action" value="create">
+
+                        <select class="form-select" name="categorycode" id="category-code">
                             {{-- <option value="">PILIH KODE KATEGORI</option> --}}
                             @foreach ($codeCategory as $key => $row)
                             <option value="{{ $row->tblitemcategory_id }}" {{ old('categorycode')==$row->
@@ -205,10 +157,11 @@ Garansi
                                 {{ $row->tblitemcategory_name }}</option>
                             @endforeach
                         </select>
+                        <label for="category-code" class="form-label">Kode Kategori</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="brand-code" class="col-form-label">Kode Merek :</label>
-                        <select class="form-control" name="brandcode" id="brand-code">
+                    <div class="form-floating mb-3">
+
+                        <select class="form-select" name="brandcode" id="brand-code">
                             {{-- <option value="">PILIH KODE MEREK</option> --}}
                             @foreach ($codeBrand as $key => $row)
                             <option value="{{ $row->tblitembrand_id }}" {{ old('brandcode')==$row->tblitembrand_id ?
@@ -217,67 +170,73 @@ Garansi
                                 {{ $row->tblitembrand_name }}</option>
                             @endforeach
                         </select>
+                        <label for="brand-code" class="form-label">Kode Merek</label>
                     </div>
                     <div class="mb-3">
-                        <label for="model-code" class="col-form-label">Kode Model :</label>
+                        <label for="model-code" class="col-form-label">Kode Model</label>
+
                         <select class="form-control" style="width: 100%" name="modelcode" id="model-code">
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="sn-transaction" class="col-form-label">SN :</label>
+                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="sntransaction" id="sn-transaction"
-                            value="{{ old('sntransaction') }}">
+                            value="{{ old('sntransaction') }}" placeholder="SN">
+                        <label for="sn-transaction" class="col-form-label">SN</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="dok-bukti" class="col-form-label">Dokumen Bukti :</label>
+                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="dokbukti" id="dok-bukti"
-                            value="{{ old('dokbukti') }}">
+                            value="{{ old('dokbukti') }}" placeholder="Dokumen Bukti">
+                        <label for="dok-bukti" class="col-form-label">Dokumen Bukti</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="distributor-id" class="col-form-label">Distributor :</label>
+                    <div class="form-floating mb-3">
+
                         <input type="text" class="form-control" name="distributorname" id="distributor-id"
-                            value="{{ old('distributorname') }}">
+                            value="{{ old('distributorname') }}" placeholder="Distributor">
+                        <label for="distributor-id" class="col-form-label">Distributor</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="pemakai-id" class="col-form-label">Pemakai :</label>
+                    <div class="form-floating mb-3">
+
                         <input type="text" class="form-control" name="pemakainame" id="pemakai-id"
-                            value="{{ old('pemakainame') }}">
+                            value="{{ old('pemakainame') }}" placeholder="Pemakai">
+                        <label for="pemakai-id" class="col-form-label">Pemakai</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="lokasi-id" class="col-form-label">Lokasi :</label>
+                    <div class="form-floating mb-3">
+
                         <input type="text" class="form-control" name="lokasiname" id="lokasi-id"
-                            value="{{ old('lokasiname') }}">
+                            value="{{ old('lokasiname') }}" placeholder="Lokasi">
+                        <label for="lokasi-id" class="col-form-label">Lokasi</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="tanggal-beli-id" class="col-form-label">Tanggal Pembelian :</label>
-                        <input type="date" class="form-control" name="tanggalbeliname"
+                    <div class="form-floating mb-3">
+                        <input type="date" placeholder="Date" class="form-control" name="tanggalbeliname"
                             value="{{ old('tanggalbeliname', date('Y-m-d')) }}" id="tanggal-beli-id">
+                        <label for="tanggal-beli-id" class="col-form-label">Tanggal Pembelian</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="period-id" class="col-form-label">Periode Bulan :</label>
+                    <div class="form-floating mb-3">
                         <input type="number" class="form-control" min="1" value="{{ old('periodname') }}" max="100"
-                            name="periodname" id="period-id">
+                            name="periodname" id="period-id" placeholder="Period">
+                        <label for="period-id" class="col-form-label">Periode Bulan</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="status-id" class="col-form-label">Status :</label>
-                        <select class="form-control" name="statusname" id="status-id">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="statusname" id="status-id">
                             @foreach ($codeStatus as $key => $row)
                             <option value="{{ $row->tblitemstatus_id }}" {{ old('statusname')==$row->tblitemstatus_id ?
                                 'selected' : '' }}>
                                 {{ $row->tblitemstatus_name }}</option>
                             @endforeach
                         </select>
+
+                        <label for="status-id" class="form-label">Status</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="catatan-id" class="col-form-label">Catatan :</label>
-                        <textarea name="note" class="form-control" id="note-id">{{ old('note') }}</textarea>
-                        <div class="mb-3">
-                        </div>
+                    <div class="form-floating mb-3">
+
+                        <textarea name="note" style="height: 100px" class="form-control" id="note-id"
+                            placeholder="note">{{ old('note') }}</textarea>
+                        <label for="catatan-id" class="col-form-label">Catatan</label>
 
                         @if ($errors->any() && old('action') == 'create')
-                        <div class="alert alert-danger">
-                            <ul>
+                        <div class="alert alert-danger mb-4">
+                            <ul class="mb-0">
                                 @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                                 @endforeach
@@ -297,41 +256,12 @@ Garansi
 
 
 
-<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true"
-    role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header errorModal">
-                <h5 class="modal-title"><i class="fas fa-exclamation"></i>&nbsp;Error Message</h5>
-            </div>
-            <div class="modal-body">
-                {{ Session::get('error') }}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
+<x-error-modal>
+</x-error-modal>
 
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
-    aria-hidden="true" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header successModal">
-                <h5 class="modal-title"><i class="fas fa-check"></i>&nbsp;Success Message</h5>
-            </div>
-            {{--
-            <div class="modal-body">
-                {{ Session::get('success') }}
-            </div>
-            --}}
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
+<x-success-modal>
+</x-success-modal>
+
 @endsection
 @section('script')
 @if ($errors->any() && old('action') == 'create')

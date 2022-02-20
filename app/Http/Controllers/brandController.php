@@ -7,6 +7,7 @@ use App\itemBrand;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class brandController extends Controller
 {
@@ -58,7 +59,8 @@ class brandController extends Controller
         $brand->tblitembrand_modifyBy = $idAuth;
         $brand->save();
 
-        Session::flash('success','Data berhasil tertambah');
+        // Session::flash('success','Data berhasil tertambah');
+        Alert::success('Success Title', 'Success Message');
 
         return redirect()->back();
     }
@@ -82,8 +84,8 @@ class brandController extends Controller
         $brand = itemBrand::find($id);
 
         $validator = Validator::make($req->all(), [
-            'brandcode' => 'required|min:4|max:4',
-            'brandname' => 'required|max:50',
+            'brandcode' => 'required|min:4|max:4|unique:tbl_gr_m_item_brand,tblitembrand_code',
+            'brandname' => 'required|max:50|unique:tbl_gr_m_item_brand,tblitembrand_name',
         ], $this->messages);
 
         if ($validator->fails()) {

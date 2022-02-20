@@ -32,7 +32,7 @@ class categoryController extends Controller
     {
         // $brand = itemCategory::where('tblitembrand_code','like','ST-04')->orWhere('tblitembrand_id','like','5')->orderBy('tblitembrand_name','asc')->get();
 
-        $category = itemCategory::orderBy('tblitemcategory_code', 'asc')->paginate(10);
+        $category = itemCategory::sortable()->orderBy('tblitemcategory_id', 'desc')->paginate(10);
         $requestParam = '';
 
         return view('category.index', compact('category', 'requestParam'));
@@ -85,8 +85,8 @@ class categoryController extends Controller
         $category = itemCategory::find($id);
 
         $validator = Validator::make($req->all(), [
-            'categorycode' => 'required|min:4|max:4',
-            'categoryname' => 'required|max:50',
+            'categorycode' => 'required|min:4|max:4|unique:tbl_gr_m_item_category,tblitemcategory_code',
+            'categoryname' => 'required|max:50|unique:tbl_gr_m_item_category,tblitemcategory_name',
         ], $this->messages);
 
         if ($validator->fails()) {

@@ -1,78 +1,70 @@
 @extends('layouts.app')
 @section('title')
-    Edit Model
+Edit Model
 @endsection
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form action="{{ route('model.edit.detail',$model->tblitemmodel_id) }}" method="POST">
-                    @csrf
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="{{ route('model.edit.detail',$model->tblitemmodel_id) }}" method="POST">
+                @csrf
 
-                    <div class="mb-3">
-                        {{-- <label for="model-code" class="col-form-label">Kode Model :</label> --}}
-                        {{-- <input type ="hidden" name ="action" value="create" >
-                <input type="text" class="form-control" id="model-code" name="categorycode" value="{{ old('categorycode')}}"> --}}
-                        <label for="category-code" class="col-form-label">Kode Kategori :</label>
-                        <select class="form-control" name="categorycode" id="category-code">
-                            @foreach ($codeCategory as $key => $row)
-                                <option value="{{ $row->tblitemcategory_id }}"
-                                    {{ $model->tblitemcategory_id == ($key+1) ? 'selected' : '' }}>
-                                    {{ $row->tblitemcategory_code }} -
-                                    {{ $row->tblitemcategory_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        {{-- <label for="model-name" class="col-form-label">Nama Model :</label>
+                <div class="form-floating mb-3">
 
-                <input type="text" class="form-control" id="model-name" name="categoryname" value="{{old('categoryname')}}"> --}}
-                        <label for="brand-code" class="col-form-label">Kode Merek :</label>
-                        <select class="form-control" name="brandcode" id="brand-code">
-                            @foreach ($codeBrand as $key => $row)
+                    <select class="form-select" name="categorycode" id="category-code">
+                        @foreach ($codeCategory as $key => $row)
+                        <option value="{{ $row->tblitemcategory_id }}" {{ $model->tblitemcategory_id == ($key+1) ?
+                            'selected' : '' }}>
+                            {{ $row->tblitemcategory_code }} -
+                            {{ $row->tblitemcategory_name }}</option>
+                        @endforeach
+                    </select>
+                    <label for="category-code" class="form-label">Kode Kategori</label>
+                </div>
+                <div class="form-floating mb-3">
 
-                                <option value="{{ $row->tblitembrand_id }}"
-                                    {{  $model->tblitembrand_id == ($key+1) ? 'selected' : '' }}>{{ $row->tblitembrand_code }} -
-                                    {{ $row->tblitembrand_name }}</option>
+                    <select class="form-select" name="brandcode" id="brand-code">
+                        @foreach ($codeBrand as $key => $row)
 
-                                    @endforeach
-                        </select>
+                        <option value="{{ $row->tblitembrand_id }}" {{ $model->tblitembrand_id == ($key+1) ? 'selected'
+                            : '' }}>{{ $row->tblitembrand_code }} -
+                            {{ $row->tblitembrand_name }}</option>
 
-                    </div>
+                        @endforeach
+                    </select>
+                    <label for="brand-code" class="form-label">Kode Merek</label>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="model-code" class="col-form-label">Kode Model :</label>
-                        <input type="hidden" name="action" value="create">
-                        <input type="text" class="form-control upperText" id="model-code" name="modelcode"
-                            value="{{ old('modelcode',$model->tblitemmodel_codeModel) }}">
+                <div class="form-floating mb-3">
+                    <input type="hidden" name="action" value="create">
+                    <input type="text" class="form-control upperText" id="model-code" name="modelcode"
+                        value="{{ old('modelcode',$model->tblitemmodel_codeModel) }}" placeholder="Kode Model">
+                    <label for="model-code" class="col-form-label">Kode Model</label>
+                </div>
 
-                    </div>
-
-                    <label for="model-name" class="col-form-label">Deskripsi Model :</label>
-
-                    {{-- <input type="text" class="form-control" id="model-name" name="modelname" value="{{old('modelname')}}"> --}}
-                    <textarea name="modelname" class="form-control"
+                <div class="form-floating mb-3">
+                    <textarea name="modelname" class="form-control" style="height: 100px"
                         id="model-name">{{ old('modelname',$model->tblitemmodel_descriptionModel) }}</textarea>
-                    <div class="mb-3">
+                    <label for="model-name" class="col-form-label">Deskripsi Model</label>
+                </div>
 
-                    </div>
-                    @if ($errors->any() && old('action') == 'create')
-                        <div class="alert alert-danger">
-                            <ul>
+                @if ($errors->any() && old('action') == 'create')
+                <div class="alert alert-danger mb-4">
+                    <ul class="mb-0">
 
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <button type="submit" id="submitbtn" class="btn btn-primary">{{ __('Simpan') }}</button>
-                    <a href="{{ route('model') }}">
-                    <button type="button" class="btn btn-secondary"  data-dismiss="modal">{{ __('Tutup') }}</button>
-                    </a>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <button type="submit" id="submitbtn" class="btn btn-primary">{{ __('Simpan') }}</button>
+                <a href="{{ route('model') }}">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Tutup') }}</button>
+                </a>
 
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 @endsection

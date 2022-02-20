@@ -7,8 +7,9 @@ Merek
     <div class="row">
         <div class="pt-3 pl-3 pb-3 col-md">
             <button type="button" id="buttonAddBrand" class="btn btn-dark" data-toggle="modal" data-backdrop="static"
-                data-keyboard="false" data-target="#createModal" data-whatever="@mdo"><i
-                    class="fas fa-plus"></i></button>
+                data-keyboard="false" data-target="#createModal" data-whatever="@mdo">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
         <div class="pt-3 pl-3 pb-3 col-md-4">
             <form class="form-inline my-2 my-lg-0" action="{{ route('brand.search') }}" method="get">
@@ -24,60 +25,59 @@ Merek
         </div>
     </div>
     <div class="col-12">
-        <h3 class="textWhite"">List Merek Barang</h3>
+        <h3 class="text-dark">List Merek Barang</h3>
         @if (count($brand) == 0)
-        <div class=" border ">
-            <div class=" card ">
-                <div class=" card-body EmptyTable">
-            Data Merek belum ada.
+        <div class="align-items-center justify-content-center flex-row d-flex py-4">
+            <div class="card bg-info flex-center">
+                <div class="card-body EmptyTable">
+                    <a class="text-white"> Data Merek belum ada / Tidak ditemukan</a>
+                </div>
+            </div>
+        </div>
+        @else
+        <table class="table table-bordered" id="TheTable">
+            <thead class="table-info">
+                <tr>
+                    <th scope="col" class="col-1" class="Oswald">
+                        Nomor
+                    </th>
+                    <th scope="col" class="col-1" class="Oswald">
+                        @sortablelink('tblitembrand_code','Kode Merek')
+                    </th>
+                    <th scope="col" class="col-8" class="Oswald">
+                        @sortablelink('tblitembrand_name','Nama Merek')
+                    </th>
+                    <th scope="col" class="col-2" class="Oswald">
+                        Sub Menu
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($brand as $key => $row)
+                <tr>
+                    <td data-label="Nomor" class="RowNumber Oswald">
+                        {{ $brand->firstItem() + $key }}
+                    </td>
+                    <td data-label="Kode" class="Oswald">
+                        {{ $row->tblitembrand_code }}
+                    </td>
+                    <td data-label="Nama" class="Oswald">
+                        {{ $row->tblitembrand_name }}
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-primary" href="{{ route('brand.edit', $row->tblitembrand_id) }}">
+                            <span class="btnEdit"><i class="fas fa-edit"></i>&nbsp;Edit</span>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        {!! $brand->appends(\Request::except('page'))->render() !!}
+        {{-- {{ $brand->links() }} --}}
+        @endif
+
     </div>
-</div>
-</div>
-@else
-<table class="table table-bordered" id="TheTable">
-    <thead class="table-info">
-        <tr>
-            <th scope="col" class="col-1" class="Oswald">
-                Nomor
-            </th>
-            <th scope="col" class="col-1" class="Oswald">
-                @sortablelink('tblitembrand_code','Kode Merek')
-            </th>
-            <th scope="col" class="col-8" class="Oswald">
-                @sortablelink('tblitembrand_name','Nama Merek')
-            </th>
-            <th scope="col" class="col-2" class="Oswald">
-                Sub Menu
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($brand as $key => $row)
-        <tr>
-            <td data-label="Nomor" class="RowNumber Oswald">
-                {{ $brand->firstItem() + $key }}
-            </td>
-            <td data-label="Kode" class="Oswald">
-                {{ $row->tblitembrand_code }}
-            </td>
-            <td data-label="Nama" class="Oswald">
-                {{ $row->tblitembrand_name }}
-            </td>
-            <td class="text-center">
-                <a class="btn btn-primary" href="{{ route('brand.edit', $row->tblitembrand_id) }}">
-                    <p class="btnEdit"><i class="fas fa-edit"></i></p>
-                </a>
-
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-{!! $brand->appends(\Request::except('page'))->render() !!}
-{{-- {{ $brand->links() }} --}}
-@endif
-
-</div>
 
 </div>
 
@@ -108,8 +108,8 @@ Merek
                         <label for="brand-name">Nama Merek</label>
                     </div>
                     @if ($errors->any() && old('action') == 'create')
-                    <div class="alert alert-danger">
-                        <ul>
+                    <div class="alert alert-danger mb-4">
+                        <ul class="mb-0">
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                             @endforeach

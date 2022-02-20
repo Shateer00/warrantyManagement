@@ -16,7 +16,6 @@
 </head>
 
 <body id="background">
-
     <div class="flex-center position-ref full-height">
         @if (Route::has('login'))
         <div class="top-right links">
@@ -32,17 +31,13 @@
             <div class="container-fluid">
                 <div class="col">
                     <div class="row">
-                        <div class="col-sm">
-                            <i class="fas fa-briefcase-medical fa-10x"></i>
-
+                        <div class="col-sm py-4">
+                            <i class="fas fa-briefcase-medical blackcolor fa-6x"></i>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm">
-                            <p class="title">Warranty</p>
-                        </div>
-                        <div class="col-sm">
-                            <p class="title">Management</p>
+                            <p class="title">Warranty Management</p>
                         </div>
                     </div>
                 </div>
