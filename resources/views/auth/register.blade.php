@@ -7,8 +7,20 @@ Register
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card cardShadow">
-                <div class="card-header">{{ __('') }}</div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <a href="{{ url('/') }}"><i class=" fas fa-angle-left"></i></a>
+                        </div>
+                        <div class="col">
+                            <div class="text-center font-weight-bolder">{{ __('Register') }}</div>
+                        </div>
+                        <div class="col">
 
+                        </div>
+                    </div>
+
+                </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                         @csrf

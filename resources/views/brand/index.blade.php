@@ -95,12 +95,13 @@ Merek
             <form action="{{ route('brand.add') }}" method="POST">
                 @csrf
                 <div class="modal-body">
+                    <input type="hidden" name="action" value="create">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control upperText" for="brand-code" id="brand-code"
                             name="brandcode" maxlength="4" value="{{ old('brandcode') }}" placeholder="Kode Merek">
                         <label for="brand-code">Kode Merek</label>
 
-                        <input type="hidden" name="action" value="create">
+
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" for="brand-name" id="brand-name" name="brandname"

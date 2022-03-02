@@ -7,13 +7,24 @@ Login
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card cardShadow">
-                <div class="card-header">{{ __('') }}</div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <a href="{{ url('/') }}"><i class=" fas fa-angle-left"></i></a>
+                        </div>
+                        <div class="col">
+                            <div class="text-center font-weight-bolder">{{ __('Sign In') }}</div>
+                        </div>
+                        <div class="col">
 
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
 
-                        <div class="form-group row">
+                        <div class="form-group row ">
                             <label for="email" class="col-sm-4 col-form-label text-md-right font-weight-bold">{{
                                 __('Email Address')
                                 }}</label>
@@ -68,10 +79,9 @@ Login
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-
-                                {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-secondary" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
-                                </a> --}}
+                                </a>
                             </div>
                         </div>
                     </form>

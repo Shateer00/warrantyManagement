@@ -71,16 +71,33 @@ body {
 }
 
 #background {
-    // background-image: #99ffd5;
+    background-image: #99ffd5;
 
-    background-image:
-        radial-gradient(at 59% 19%, hsla(29, 46%, 82%, 1) 0, transparent 54%),
-        radial-gradient(at 78% 16%, hsla(178, 66%, 72%, 1) 0, transparent 57%),
-        radial-gradient(at 30% 89%, hsla(183, 72%, 66%, 1) 0, transparent 49%),
-        radial-gradient(at 1% 52%, hsla(158, 79%, 63%, 1) 0, transparent 44%),
-        radial-gradient(at 58% 60%, hsla(83, 80%, 67%, 1) 0, transparent 53%),
-        radial-gradient(at 60% 54%, hsla(339, 71%, 73%, 1) 0, transparent 49%),
-        radial-gradient(at 29% 35%, hsla(95, 60%, 72%, 1) 0, transparent 51%);
+    @include keyframes(backgroundColorKF) {
+        0% {
+            background-image:
+                radial-gradient(at 59% 19%, hsla(29, 46%, 82%, 1) 0, transparent 54%),
+                radial-gradient(at 78% 16%, hsla(178, 66%, 72%, 1) 0, transparent 57%),
+                radial-gradient(at 30% 89%, hsla(183, 72%, 66%, 1) 0, transparent 49%),
+                radial-gradient(at 1% 52%, hsla(158, 79%, 63%, 1) 0, transparent 44%),
+                radial-gradient(at 58% 60%, rgb(196, 201, 188) 0, transparent 53%),
+                radial-gradient(at 60% 54%, hsla(339, 71%, 73%, 1) 0, transparent 49%),
+                radial-gradient(at 29% 35%, rgb(215, 218, 214) 0, transparent 51%);
+        }
+
+        100% {
+            background-image:
+                radial-gradient(at 59% 19%, rgb(255, 219, 184) 0, transparent 54%),
+                radial-gradient(at 78% 16%, rgb(138, 184, 182) 0, transparent 57%),
+                radial-gradient(at 30% 89%, rgb(114, 193, 197) 0, transparent 49%),
+                radial-gradient(at 1% 52%, rgb(177, 235, 213) 0, transparent 44%),
+                radial-gradient(at 58% 60%, rgb(196, 201, 188) 0, transparent 53%),
+                radial-gradient(at 60% 54%, hsla(339, 71%, 73%, 1) 0, transparent 49%),
+                radial-gradient(at 29% 35%, rgb(215, 218, 214) 0, transparent 51%);
+        }
+    }
+
+    @include animate(backgroundColorKF, 5s, linear, infinite);
 }
 
 .line {
@@ -126,12 +143,6 @@ body {
 .top-right {
     position: absolute;
     right: 10px;
-    top: 18px;
-}
-
-.top-right {
-    position: absolute;
-    left: 10px;
     top: 18px;
 }
 

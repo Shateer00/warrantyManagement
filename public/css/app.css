@@ -18194,7 +18194,29 @@ body {
 }
 
 #background {
-  background-image: radial-gradient(at 59% 19%, #e6d0bc 0, transparent 54%), radial-gradient(at 78% 16%, #88e7e4 0, transparent 57%), radial-gradient(at 30% 89%, #6ae0e7 0, transparent 49%), radial-gradient(at 1% 52%, #56ebb5 0, transparent 44%), radial-gradient(at 58% 60%, #bbee68 0, transparent 53%), radial-gradient(at 60% 54%, #eb89ab 0, transparent 49%), radial-gradient(at 29% 35%, #b0e28d 0, transparent 51%);
+  background-image: #99ffd5;
+  -webkit-animation: backgroundColorKF 5s linear infinite;
+          animation: backgroundColorKF 5s linear infinite;
+}
+
+@-webkit-keyframes backgroundColorKF {
+  0% {
+    background-image: radial-gradient(at 59% 19%, #e6d0bc 0, transparent 54%), radial-gradient(at 78% 16%, #88e7e4 0, transparent 57%), radial-gradient(at 30% 89%, #6ae0e7 0, transparent 49%), radial-gradient(at 1% 52%, #56ebb5 0, transparent 44%), radial-gradient(at 58% 60%, #c4c9bc 0, transparent 53%), radial-gradient(at 60% 54%, #eb89ab 0, transparent 49%), radial-gradient(at 29% 35%, #d7dad6 0, transparent 51%);
+  }
+
+  100% {
+    background-image: radial-gradient(at 59% 19%, #ffdbb8 0, transparent 54%), radial-gradient(at 78% 16%, #8ab8b6 0, transparent 57%), radial-gradient(at 30% 89%, #72c1c5 0, transparent 49%), radial-gradient(at 1% 52%, #b1ebd5 0, transparent 44%), radial-gradient(at 58% 60%, #c4c9bc 0, transparent 53%), radial-gradient(at 60% 54%, #eb89ab 0, transparent 49%), radial-gradient(at 29% 35%, #d7dad6 0, transparent 51%);
+  }
+}
+
+@keyframes backgroundColorKF {
+  0% {
+    background-image: radial-gradient(at 59% 19%, #e6d0bc 0, transparent 54%), radial-gradient(at 78% 16%, #88e7e4 0, transparent 57%), radial-gradient(at 30% 89%, #6ae0e7 0, transparent 49%), radial-gradient(at 1% 52%, #56ebb5 0, transparent 44%), radial-gradient(at 58% 60%, #c4c9bc 0, transparent 53%), radial-gradient(at 60% 54%, #eb89ab 0, transparent 49%), radial-gradient(at 29% 35%, #d7dad6 0, transparent 51%);
+  }
+
+  100% {
+    background-image: radial-gradient(at 59% 19%, #ffdbb8 0, transparent 54%), radial-gradient(at 78% 16%, #8ab8b6 0, transparent 57%), radial-gradient(at 30% 89%, #72c1c5 0, transparent 49%), radial-gradient(at 1% 52%, #b1ebd5 0, transparent 44%), radial-gradient(at 58% 60%, #c4c9bc 0, transparent 53%), radial-gradient(at 60% 54%, #eb89ab 0, transparent 49%), radial-gradient(at 29% 35%, #d7dad6 0, transparent 51%);
+  }
 }
 
 .line {
@@ -18261,12 +18283,6 @@ body {
 .top-right {
   position: absolute;
   right: 10px;
-  top: 18px;
-}
-
-.top-right {
-  position: absolute;
-  left: 10px;
   top: 18px;
 }
 
