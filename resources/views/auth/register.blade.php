@@ -13,7 +13,7 @@ Register
                             <a href="{{ url('/') }}"><i class=" fas fa-angle-left"></i></a>
                         </div>
                         <div class="col">
-                            <div class="text-center font-weight-bolder">{{ __('Register') }}</div>
+                            <div class="text-center font-weight-bolder">{{ __('welcome.register') }}</div>
                         </div>
                         <div class="col">
 
@@ -27,12 +27,12 @@ Register
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right font-weight-bold">{{
-                                __('Name') }}</label>
+                                __('Nama') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text"
                                     class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                    value="{{ old('name') }}" placeholder="Enter Name" required autofocus>
+                                    value="{{ old('name') }}" placeholder="Nama" required autofocus>
 
                                 @if ($errors->has('name'))
                                 <span class="invalid-feedback" role="alert">
@@ -44,13 +44,13 @@ Register
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right font-weight-bold">{{
-                                __('Email Address')
+                                __('Alamat Email')
                                 }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                                    value="{{ old('email') }}" placeholder="Enter Email Address" required>
+                                    value="{{ old('email') }}" placeholder="Alamat Email" required>
 
                                 @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
@@ -62,13 +62,13 @@ Register
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right font-weight-bold">{{
-                                __('Password')
+                                __('Kata Sandi')
                                 }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
                                     class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                    name="password" placeholder="Enter Password" required>
+                                    name="password" placeholder="Kata Sandi" required>
 
                                 @if ($errors->has('password'))
                                 <span class="invalid-feedback" role="alert">
@@ -80,19 +80,19 @@ Register
 
                         <div class="form-group row">
                             <label for="password-confirm"
-                                class="col-md-4 col-form-label text-md-right font-weight-bold">{{ __('Confirm
-                                Password') }}</label>
+                                class="col-md-4 col-form-label text-md-right font-weight-bold">{{ __('Konfirmasi Kata
+                                Sandi') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation" placeholder="Enter Password Confirmation" required>
+                                    name="password_confirmation" placeholder="Konfirmasi Kata Sandi" required>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('welcome.register') }}
                                 </button>
                             </div>
                         </div>

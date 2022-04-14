@@ -19,7 +19,8 @@ Home
 </div>
 @endsection
 @section('script')
-const TheSummaryChart = document.getElementById('SummaryChart').getContext('2d');
+const TheSummaryChart =
+document.getElementById('SummaryChart').getContext('2d');
 CreateDashboardSummaryChart(
 TheSummaryChart,
 {{ $totalBrand }},
@@ -27,5 +28,4 @@ TheSummaryChart,
 {{ $totalModel }},
 {{ $totalWarranty}}
 );
-
 @endsection

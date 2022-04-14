@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('user',function(Request $request) {
-    dd($request);
     return User::create($request->all);
 });
 

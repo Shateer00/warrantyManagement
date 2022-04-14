@@ -1,6 +1,6 @@
 CreateDashboardSummaryChart = function (x, totalBrand, totalCategory, totalModel, totalWarranty) {
     const TheChart = new Chart(x, {
-        type: 'doughnut',
+        type: 'bar',
         data: {
             labels: ['Merek', 'Kategori', 'Model', 'Garansi'],
             datasets: [{

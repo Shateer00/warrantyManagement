@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\CustomEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -28,4 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sendEmailVerificationNotification()
+    {
+        // ...Your Logic Here
+        $currentNameGiven = $this->name;
+        $this->notify(new CustomEmail($currentNameGiven));
+    }
 }

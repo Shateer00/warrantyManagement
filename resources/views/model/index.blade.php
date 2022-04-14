@@ -39,22 +39,22 @@ Model
         <table class="table table-bordered" id="TheTable">
             <thead class="table-info">
                 <tr>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1">
                         Nomor
                     </th>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1">
                         @sortablelink('tblitemcategory_id','Kategori')
                     </th>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1">
                         @sortablelink('tblitembrand_id','Merek')
                     </th>
-                    <th scope="col" class="col-2 Oswald">
+                    <th scope="col" class="col-2">
                         @sortablelink('tblitemmodel_codeModel','Kode Model')
                     </th>
-                    <th scope="col" class="limitDescriptionText  Oswald col-5">
+                    <th scope="col" class="limitDescriptionText col-5">
                         @sortablelink('tblitemmodel_descriptionModel','Deskripsi Model')
                     </th>
-                    <th class="col-2  Oswald">
+                    <th class="col-2 ">
                         Sub Menu
                     </th>
                 </tr>

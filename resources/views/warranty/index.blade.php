@@ -6,8 +6,8 @@ Garansi
 <div class="pl-3 pt-4 pr-3 pb-4">
     <div class="row">
         <div class="pt-3 pl-3 pb-3 col-md">
-            <button type="button" id="buttonAddWarranty" class="btn btn-primary" data-toggle="modal"
-                data-backdrop="static" data-keyboard="false" data-target="#createModal" data-whatever="@mdo"><i
+            <button type="button" id="buttonAddWarranty" class="btn btn-dark" data-toggle="modal" data-backdrop="static"
+                data-keyboard="false" data-target="#createModal" data-whatever="@mdo"><i
                     class="fas fa-plus"></i></button>
         </div>
         <div class="pt-3 pl-3 pb-3 col-md-4">
@@ -38,28 +38,28 @@ Garansi
         <table class="table table-bordered">
             <thead class="table-info">
                 <tr>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1 ">
                         Nomor
                     </th>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1 ">
                         @sortablelink('tblitemwarrant_SN','SN')
                     </th>
-                    <th scope="col" class="col-2 Oswald">
+                    <th scope="col" class="col-2 ">
                         Kategori
                     </th>
-                    <th scope="col" class="col-2 Oswald">
+                    <th scope="col" class="col-2 ">
                         Merek
                     </th>
-                    <th scope="col" class="col-2 Oswald">
+                    <th scope="col" class="col-2 ">
                         @sortablelink('tblitemmodel_id','Model')
                     </th>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1 ">
                         @sortablelink('tblitemstatus_id','Status')
                     </th>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1 ">
                         Warranty
                     </th>
-                    <th scope="col" class="col-1 Oswald">
+                    <th scope="col" class="col-1 ">
                         Sub Menu
                     </th>
                 </tr>
@@ -117,7 +117,8 @@ Garansi
                         <a class="btn btn-primary" href="{{ route('warranty.edit', $row->tblitemwarranty_id) }}">
                             <span class="btnEdit"><i class="fas fa-edit"></i>&nbsp;Edit</span>
                         </a>
-
+                        <a class="nav-link font-weight-bold"
+                            href="{{ route('PDFGenerate',$row->tblitemwarranty_id) }}">{{ __('PDF') }}</a>
                     </td>
                 </tr>
                 @endforeach

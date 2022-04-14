@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::group(['middleware' => ['verified']], function() {
 
+        Route::get('/PDFGenerate/{id}', 'PDFController@PDFGenerate')->name('PDFGenerate');
+
         /**
          * Brand GET
          */

@@ -10,6 +10,7 @@ Merek
                 data-keyboard="false" data-target="#createModal" data-whatever="@mdo">
                 <i class="fas fa-plus"></i>
             </button>
+
         </div>
         <div class="pt-3 pl-3 pb-3 col-md-4">
             <form class="form-inline my-2 my-lg-0" action="{{ route('brand.search') }}" method="get">

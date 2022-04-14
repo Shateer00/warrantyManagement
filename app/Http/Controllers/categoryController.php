@@ -86,7 +86,7 @@ class categoryController extends Controller
 
         $validator = Validator::make($req->all(), [
             'categorycode' => 'required|min:4|max:4|unique:tbl_gr_m_item_category,tblitemcategory_code',
-            'categoryname' => 'required|max:50|unique:tbl_gr_m_item_category,tblitemcategory_name',
+            'categoryname' => 'required|max:50|',// unique:tbl_gr_m_item_category,tblitemcategory_name
         ], $this->messages);
 
         if ($validator->fails()) {
