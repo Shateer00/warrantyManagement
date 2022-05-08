@@ -12,7 +12,7 @@
 */
 
 return [
-    'failed'   => 'Identitas tersebut tidak cocok dengan data kami.',
-    'password' => 'The provided password is incorrect.',
+    'failed'   => 'Alamat Email atau kata Sandi tidak sesuai',
+    'password' => 'Kata sandi tidak sesuai',
     'throttle' => 'Terlalu banyak upaya masuk. Silahkan coba lagi dalam :seconds detik.',
 ];

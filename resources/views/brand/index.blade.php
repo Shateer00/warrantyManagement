@@ -15,13 +15,16 @@ Merek
         <div class="pt-3 pl-3 pb-3 col-md-4">
             <form class="form-inline my-2 my-lg-0" action="{{ route('brand.search') }}" method="get">
                 @if ($requestParam == '')
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='param'>
+                <input class="form-control mr-sm-2" type="search" placeholder="Cari" aria-label="Search" name='param'>
                 @else
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='param'
+                <input class="form-control mr-sm-2" type="search" placeholder="Cari" aria-label="Search" name='param'
                     value="{{ $requestParam }}">
                 @endif
                 <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                <a class="btn btn-secondary my-2 my-sm-0 ml-3" href="{{ route('brand') }}">Reset</a>
+                <a class="btn btn-secondary my-2 my-sm-0 ml-3" href="{{ route('brand') }}">
+
+
+                    <i class="fas fa-redo"></i></a>
             </form>
         </div>
     </div>

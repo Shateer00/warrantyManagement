@@ -98,8 +98,8 @@ class modelController extends Controller
         $validator = Validator::make($req->all(),[
             'categorycode' => 'required',
             'brandcode' => 'required',
-            'modelcode' => 'required|max:30|unique:tbl_gr_m_item_model,tblitemmodel_codeModel',
-            'modelname' => 'required|max:100|unique:tbl_gr_m_item_model,tblitemmodel_descriptionModel',
+            'modelcode' => 'required|max:30|unique:tbl_gr_m_item_model,tblitemmodel_codeModel,'.$id.',tblitemmodel_id',
+            'modelname' => 'required|max:100|unique:tbl_gr_m_item_model,tblitemmodel_descriptionModel,'.$id.',tblitemmodel_id',
         ],$this->messages);
 
         if ($validator->fails()) {

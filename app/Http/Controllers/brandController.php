@@ -84,8 +84,8 @@ class brandController extends Controller
         $brand = itemBrand::find($id);
 
         $validator = Validator::make($req->all(), [
-            'brandcode' => 'required|min:4|max:4|unique:tbl_gr_m_item_brand,tblitembrand_code',
-            'brandname' => 'required|max:50|',//unique:tbl_gr_m_item_brand,tblitembrand_name
+            'brandcode' => 'required|min:4|max:4|unique:tbl_gr_m_item_brand,tblitembrand_code,'.$id.',tblitembrand_id',
+            'brandname' => 'required|max:50|unique:tbl_gr_m_item_brand,tblitembrand_name,'.$id.',tblitembrand_id',//
         ], $this->messages);
 
         if ($validator->fails()) {

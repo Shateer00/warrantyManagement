@@ -21,8 +21,6 @@
                     <th>SN</th>
                     <th>Dokumen Bukti</th>
                     <th>Distributor</th>
-                    <th>Nama</th>
-                    <th>Password</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,9 +30,7 @@
                     <td>{{ $i++ }}</td>
                     <td>{{$p->tblitemwarrant_SN}}</td>
                     <td>{{$p->tblitemwarrant_dokBukti}}</td>
-                    <td>{{$p->email}}</td>
-                    <td>{{$p->email_verified}}</td>
-                    <td>{{$p->password}}</td>
+                    <td>{{$p->tblitemwarrant_distributor}}</td>
                 </tr>
                 @endforeach
             </tbody>
