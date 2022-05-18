@@ -151,7 +151,6 @@ return [
          * Package Service Providers...
          */
         \Barryvdh\DomPDF\ServiceProvider::class,
-        \Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -213,7 +212,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'PDF'=>\Barryvdh\DomPDF\Facade::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
