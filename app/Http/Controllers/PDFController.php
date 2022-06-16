@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\itemWarranty;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade;
 use PDF;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -30,11 +29,11 @@ class PDFController extends Controller
             'tbl_gr_m_item_brand.tblitembrand_id',
             '=',
             'tbl_gr_m_item_model.tblitembrand_id'
-        )->select('tbl_gr_t_item_warranty.*',
-        'tbl_gr_m_item_model.*',
-        'tbl_gr_m_item_category.*',
-        'tbl_gr_m_item_brand.*')->get();
+        )->where('tblitemwarranty_id','=',$id)->get();
+        // return view('PDFOutput', ['Warranty'=>$warranty]);
+        // dd($warranty);
         $pdf = PDF::loadview('PDFOutput',['Warranty'=>$warranty]);
-    	return $pdf->download('laporan-pegawai-pdf');
+        return $pdf->stream('Warranty.pdf');
+    	// return $pdf->download('laporan-pegawai.pdf');
     }
 }

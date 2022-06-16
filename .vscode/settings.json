@@ -2,5 +2,5 @@
     "files.autoSave": "afterDelay",
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Umbra",
-    "editor.fontFamily": "'Cascadia Code', 'Operator Mono', 'Fira Code', 'Menlo Regular'"
+    "terminal.integrated.fontSize": 16
 }

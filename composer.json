@@ -16,6 +16,7 @@
         "laravel/helpers": "^1.4",
         "laravel/tinker": "^2.0",
         "laravel/ui": "3.0",
+        "niklasravnsborg/laravel-pdf": "^4.1",
         "realrashid/sweet-alert": "^5.0"
     },
     "require-dev": {
