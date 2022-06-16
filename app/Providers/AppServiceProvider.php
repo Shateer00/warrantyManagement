@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         //
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
     }
 
     /**
